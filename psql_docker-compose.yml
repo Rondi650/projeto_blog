@@ -12,7 +12,20 @@ services:
       - media_data:/data/web/media/
     env_file:
       - ./.env
+    # depends_on:
+    #   - psql
+
+# MARCADO COM # PARA PRODUCAO
+
+  # psql:
+  #   container_name: psql
+  #   image: postgres:13-alpine
+  #   volumes:
+  #     - ./data/postgres/data:/var/lib/postgresql/data/
+  #   env_file:
+  #     - ./dotenv_files/.env
 
 volumes:
   static_data:
   media_data:
+  # postgres_data:
