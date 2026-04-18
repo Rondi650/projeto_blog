@@ -79,18 +79,6 @@ WSGI_APPLICATION = 'project.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projeto_blog',
-        'USER': 'rondi',
-        'PASSWORD': 'rondi',
-        'HOST': '127.0.0.1',  # <--- CERTIFIQUE-SE QUE ESTÁ ASSIM
-        'PORT': '3306',
-    }
-}
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
