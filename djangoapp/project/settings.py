@@ -20,8 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # /data/web/
 DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 
-print(DATA_DIR)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +62,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': True,  # Ativa a busca em app_name/templates/
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
