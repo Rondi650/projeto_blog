@@ -3,3 +3,5 @@ mysqlclient==2.2.8 # sudo apt install libmysqlclient-dev
 asgiref==3.11.1
 Django==6.0.4
 sqlparse==0.5.5
+dotenv==0.9.9
+python-dotenv==1.2.2

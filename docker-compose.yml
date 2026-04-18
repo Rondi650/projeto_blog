@@ -1,0 +1,17 @@
+services:
+  djangoapp:
+    container_name: djangoapp
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./djangoapp:/djangoapp
+      - static_data:/data/web/static/
+      - media_data:/data/web/media/
+    env_file:
+      - ./.env
+
+volumes:
+  static_data:
+  media_data:
