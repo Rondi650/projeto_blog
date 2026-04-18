@@ -1,7 +1,8 @@
 Para alternar entre MySQL e PostgreSQL:
-1. Descomentar o bloco de código correspondente ao banco de dados desejado e comentar o outro em `requirements.txt`.
-2. Atualizar o FROM no  `Dockerfile` para construir uma imagem Docker com as dependências corretas para cada banco de dados.
+1. Descomentar/Comentar o bloco de código correspondente ao banco de dados desejado e comentar o outro em `requirements.txt`.
+2. Descomentar/Comentar o FROM e RUN no  `Dockerfile` para construir uma imagem Docker com as dependências corretas para cada banco de dados.
 3. Em `settings.py`, configurar o `DATABASES` para usar o banco de dados escolhido, seja MySQL ou PostgreSQL.
+    - Network Docker funciona apenas se estiver HOST="172.17.0.1", nao funciona com localhost.
 4. Certificar-se de que o banco de dados esteja em execução e acessível para a aplicação Django.
 5. Usa o docker-compose correto para iniciar os serviços:
     - Para MySQL: `docker compose -f mysql_docker-compose.yml up -d`
