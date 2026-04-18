@@ -1,6 +1,7 @@
 services:
-  djangoapp:
-    container_name: djangoapp
+  djangoapp_psql:
+    container_name: djangoapp_psql
+    restart: always
     build:
       context: .
     ports:

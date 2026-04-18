@@ -1,7 +1,8 @@
-mysql-connector-python==9.6.0
-mysqlclient==2.2.8 # sudo apt install libmysqlclient-dev
+# mysql-connector-python==9.6.0 # para mysql
+# mysqlclient==2.2.8 # sudo apt install libmysqlclient-dev | para mysql
 asgiref==3.11.1
 Django==6.0.4
 sqlparse==0.5.5
 dotenv==0.9.9
 python-dotenv==1.2.2
+psycopg2-binary==2.9.10 # para postgres
