@@ -1,7 +1,7 @@
 services:
   djangoapp_psql:
     container_name: djangoapp_psql
-    restart: always
+    restart: unless-stopped
     build:
       context: .
     ports:
