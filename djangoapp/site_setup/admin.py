@@ -1,5 +1,3 @@
-from re import S
-
 from django.contrib import admin
 from django.http import HttpRequest
 

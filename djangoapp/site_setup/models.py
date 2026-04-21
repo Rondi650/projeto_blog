@@ -27,7 +27,7 @@ class SiteSetup(models.Model):
         default=None,
         validators=[validate_png],
     )
-
+    
     def save(self, *args, **kwargs):
         favicon_current = self.favicon.name
         super().save(*args, **kwargs)
