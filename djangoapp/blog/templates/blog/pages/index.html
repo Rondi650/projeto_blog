@@ -1,17 +1,24 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <main class="main-content section-wrapper">
-    <div class="section-content-wide">
-      <div class="section-gap">
-
-        <div class="card-grid">
-          {% for i in ""|ljust:"9" %}
-            {% include 'blog/partials/_post-card.html' with i=forloop.counter0 %}
-          {% endfor %}
-        </div>
-
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Blog pessoal</div>
+    <h1>Anotações de quem está<br><em>aprendendo</em><br>programação.</h1>
+    <p>Python, Django, Linux e tudo que fica no meio do caminho entre uma ideia e o código funcionando.</p>
+    <div class="hero-actions">
+      <a href="/post/" class="btn btn-primary">Ler artigos</a>
+      <a href="#" class="btn btn-ghost">Sobre</a>
     </div>
-  </main>
+  </section>
+
+  <!-- POSTS GRID -->
+  <section class="posts">
+    <p class="section-label">Recentes</p>
+    <div class="posts-grid">
+      {% for i in ""|ljust:"9" %}
+        {% include 'blog/partials/_post-card.html' with i=forloop.counter0 %}
+      {% endfor %}
+    </div>
+  </section>
 {% endblock content %}
