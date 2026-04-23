@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from utils.model_validators import validate_png
 from utils.images import resize_image
@@ -55,7 +57,8 @@ class MenuLink(models.Model):
                                    on_delete=models.CASCADE,
                                    blank=True,
                                    null=True,
-                                   default=None,)
+                                   default=None,
+                                   related_name='menu_links')
 
     def __str__(self):
         return self.text

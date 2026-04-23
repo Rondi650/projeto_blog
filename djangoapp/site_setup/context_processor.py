@@ -8,7 +8,7 @@ def site_setup(request: HttpRequest):
     # Inicio debug
     print("-"*50, "\n", "SITE_SETUP MENU LINKS", sep="")
     if setup:
-        for link in setup.menulink_set.all():  # type:ignore
+        for link in setup.menu_links.all():  # type:ignore
             print(link)
 
     print("-"*50, "\n", "SITE_SETUP FIELDS", sep="")
