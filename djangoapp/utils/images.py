@@ -1,11 +1,12 @@
 from pathlib import Path
-from django.db.models.fields.files import ImageFieldFile
+from django.db.models.fields.files import FieldFile, ImageFieldFile
+
 
 from django.conf import settings
 from PIL import Image
 
 
-def resize_image(image_django: ImageFieldFile, 
+def resize_image(image_django: ImageFieldFile | FieldFile, 
                  new_width=800, 
                  optimize=True, 
                  quality=60):
