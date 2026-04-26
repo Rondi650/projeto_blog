@@ -23,23 +23,15 @@ def index(request: HttpRequest) -> HttpResponse:
         'blog/pages/index.html',
         {
             'page_obj': page_obj,
-            'page_title': 'Home - ',
         }
     )
 
 
 def created_by(request: HttpRequest, author_pk: int) -> HttpResponse:
-    user = User.objects.filter(pk=author_pk).first()
-    if user is None:
-        raise Http404()
     posts: QuerySet[Post] = (
         cast(PostManager, Post.objects).get_published()
         .filter(created_by__pk=author_pk)
     )
-    user_full_name = user.username
-    if user.first_name:
-        user_full_name = f'{user.first_name} {user.last_name}'
-    page_title = f'Posts de {user_full_name} - '
 
     paginator = Paginator(posts, PER_PAGE)
     page_number = request.GET.get("page")
@@ -50,7 +42,6 @@ def created_by(request: HttpRequest, author_pk: int) -> HttpResponse:
         'blog/pages/index.html',
         {
             'page_obj': page_obj,
-            'page_title': page_title,
         }
     )
 
@@ -65,15 +56,11 @@ def category(request: HttpRequest, slug: str) -> HttpResponse:
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    if len(page_obj) == 0:
-        raise Http404()
-    page_title = f'{page_obj[0].category.name} - Categoria - '
     return render(
         request,
         'blog/pages/index.html',
         {
             'page_obj': page_obj,
-            'page_title': page_title,
         }
     )
 
@@ -86,16 +73,11 @@ def tag(request: HttpRequest, slug: str) -> HttpResponse:
     paginator = Paginator(posts, PER_PAGE)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-
-    if len(page_obj) == 0:
-        raise Http404()
-    page_title = f'{page_obj[0].tags.first().name} - Tag - '
     return render(
         request,
         'blog/pages/index.html',
         {
             'page_obj': page_obj,
-            'page_title': page_title,
         }
     )
 
@@ -110,56 +92,42 @@ def search(request: HttpRequest) -> HttpResponse:
             | Q(content__icontains=search_value)
         )[:PER_PAGE]
     )
-
-    page_title = f'{search_value[:30]} - Search - '
     return render(
         request,
         "blog/pages/index.html",
         {
             "page_obj": posts,
             "search_value": search_value,
-            "page_title": page_title,
         }
     )
 
 
 def page(request: HttpRequest, slug: str) -> HttpResponse:
-    page_obj = (
-        Page.objects
-        .filter(is_published=True)
+    page = (
+        Page.objects.filter(is_published=True)
         .filter(slug=slug)
         .first()
     )
-
-    if page_obj is None:
-        raise Http404()
-    page_title = f'{page_obj.title} - Página - '
     return render(
         request,
         'blog/pages/page.html',
         {
-            'page': page_obj,
-            'page_title': page_title,
+            'page': page,
         }
     )
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
-    post_obj = (
+    post: Post | None = (
         cast(PostManager, Post.objects).get_published()
         .filter(slug=slug)
         .first()
     )
 
-    if post_obj is None:
-        raise Http404()
-    page_title = f'{post_obj.title} - Post - '
-
     return render(
         request,
         'blog/pages/post.html',
         {
-            'post': post_obj,
-            'page_title': page_title,
+            'post': post,
         }
     )
