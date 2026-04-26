@@ -1,7 +1,9 @@
 from typing import cast
 
-from blog.models import Post, PostManager
+from blog.models import Post
+from blog.models import PostManager
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -76,6 +78,26 @@ def tag(request: HttpRequest, slug: str) -> HttpResponse:
         'blog/pages/index.html',
         {
             'page_obj': page_obj,
+        }
+    )
+
+
+def search(request: HttpRequest) -> HttpResponse:
+    search_value = request.GET.get("search", "").strip()
+    posts = (
+        cast(PostManager, Post.objects).get_published()
+        .filter(
+            Q(title__icontains=search_value)
+            | Q(excerpt__icontains=search_value)
+            | Q(content__icontains=search_value)
+        )[:PER_PAGE]
+    )
+    return render(
+        request,
+        "blog/pages/index.html",
+        {
+            "page_obj": posts,
+            "search_value": search_value,
         }
     )
 
