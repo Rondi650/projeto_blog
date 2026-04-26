@@ -1,0 +1,5 @@
+- Container entrypoint is `scripts/commands.sh`; it waits for `$MYSQL_HOST:$MYSQL_PORT` via `nc` before running `python3 manage.py collectstatic --noinput`, `makemigrations`, `migrate`, then `runserver`.
+- `djangoapp/project/settings.py` calls `load_dotenv()` and defaults to PostgreSQL (`ENGINE='django.db.backends.postgresql'`) using `POSTGRES_*` env vars; switching to MySQL requires changing `settings.py` + the Dockerfile base/deps + `djangoapp/requirements.txt` (per `README.md`).
+- Docker networking constraint: DB connections must use `MYSQL_HOST`/`POSTGRES_HOST='172.17.0.1'` (not `localhost`).
+- Start the app with the matching compose file: `docker compose -f mysql_docker-compose.yml up -d` or `docker compose -f psql_docker-compose.yml up -d`, then open `http://localhost:8000`.
+- Static/media locations are fixed by `settings.py` to `data/web/static` and `data/web/media` (repo-local); ensure your compose volume mappings match, or assets may not appear.

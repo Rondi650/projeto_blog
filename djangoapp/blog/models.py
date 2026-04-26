@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from utils.images import resize_image
 from django_summernote.models import AbstractAttachment
+from django.urls import reverse
 
 # Create your models here.
 
@@ -75,8 +76,8 @@ class Page(models.Model):
         return self.title
 
 
-class PostManager(models.Manager):
-    def get_published(self):
+class PostManager(models.Manager["Post"]):
+    def get_published(self) -> models.QuerySet["Post"]:
         return self.filter(is_published=True).order_by('-id')
 
 
@@ -127,6 +128,11 @@ class Post(models.Model):
         default=None,
     )
     tags = models.ManyToManyField(Tag, blank=True, default='')
+
+    def get_absolute_url(self):
+        if not self.is_published:
+            return reverse('blog:index')
+        return reverse('blog:post', args=(self.slug,))
 
     def __str__(self):
         return self.title
