@@ -1,6 +1,6 @@
 from typing import cast
 
-from blog.models import Post
+from blog.models import Page, Post
 from blog.models import PostManager
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -103,11 +103,16 @@ def search(request: HttpRequest) -> HttpResponse:
 
 
 def page(request: HttpRequest, slug: str) -> HttpResponse:
+    page = (
+        Page.objects.filter(is_published=True)
+        .filter(slug=slug)
+        .first()
+    )
     return render(
         request,
         'blog/pages/page.html',
         {
-            # 'page_obj': page_obj,
+            'page': page,
         }
     )
 

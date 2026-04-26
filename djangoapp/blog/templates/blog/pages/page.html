@@ -1,11 +1,18 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/base.html' %} 
 
 {% block content %}
   <main class="main-content section-wrapper">
-    <div class="section-content-narrow">
+    <div class="section-content-wide">
       <div class="section-gap">
-        <h1 class="center">A page 😍</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium eaque placeat, optio architecto dignissimos est iure ipsum, iste doloribus dolorum nostrum veniam aspernatur adipisci eos et ab facilis, fugit labore!</p>
+        
+        {% if page %}
+          <h1 class="center">{{ page.title }}</h1>
+          {{ page.content | safe }}
+        {% else %}
+          <h1 class="center">Uma pagina</h1>
+          <p>Esse texto sera gerado caso voce nao encontre a pagina desejada.</p>
+        {% endif %}
+        
       </div>
     </div>
   </main>
