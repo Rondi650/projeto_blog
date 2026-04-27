@@ -8,25 +8,44 @@ from django.db.models import Q
 from django.db.models import QuerySet
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.views.generic import ListView
 
 PER_PAGE = 9
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    posts: QuerySet[Post] = cast(PostManager, Post.objects).get_published()
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/pages/index.html'
+    context_object_name = 'posts'
+    ordering = '-pk',
+    paginate_by = PER_PAGE
+    queryset = Post.objects.get_published() # type:ignore
 
-    paginator = Paginator(posts, PER_PAGE)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return render(
-        request,
-        'blog/pages/index.html',
-        {
-            'page_obj': page_obj,
+        context.update({
             'page_title': 'Home - ',
-        }
-    )
+        })
+
+        return context
+
+
+# def index(request: HttpRequest) -> HttpResponse:
+#     posts: QuerySet[Post] = cast(PostManager, Post.objects).get_published()
+
+#     paginator = Paginator(posts, PER_PAGE)
+#     page_number = request.GET.get("page")
+#     page_obj = paginator.get_page(page_number)
+
+#     return render(
+#         request,
+#         'blog/pages/index.html',
+#         {
+#             'page_obj': page_obj,
+#             'page_title': 'Home - ',
+#         }
+#     )
 
 
 def created_by(request: HttpRequest, author_pk: int) -> HttpResponse:
@@ -111,6 +130,7 @@ def search(request: HttpRequest) -> HttpResponse:
             | Q(content__icontains=search_value)
         )[:PER_PAGE]
     )
+    print(posts.query)
 
     page_title = f'{search_value[:30]} - Search - '
     return render(
