@@ -69,33 +69,6 @@ class CreatedByListView(PostListView):
         return super().get(request, *args, **kwargs)
 
 
-def created_by(request: HttpRequest, author_pk: int) -> HttpResponse:
-    user = User.objects.filter(pk=author_pk).first()
-    if user is None:
-        raise Http404()
-    posts: QuerySet[Post] = (
-        cast(PostManager, Post.objects).get_published()
-        .filter(created_by__pk=author_pk)
-    )
-    user_full_name = user.username
-    if user.first_name:
-        user_full_name = f'{user.first_name} {user.last_name}'
-    page_title = 'Posts de ' + user_full_name + ' - '
-
-    paginator = Paginator(posts, PER_PAGE)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    return render(
-        request,
-        'blog/pages/index.html',
-        {
-            'page_obj': page_obj,
-            'page_title': page_title,
-        }
-    )
-
-
 def category(request: HttpRequest, slug: str) -> HttpResponse:
     posts: QuerySet[Post] = (
         cast(PostManager, Post.objects).get_published()
