@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.db.models import QuerySet
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import ListView
 
 PER_PAGE = 9
@@ -109,28 +109,36 @@ class TagListView(PostListView):
         return ctx
 
 
-def search(request: HttpRequest) -> HttpResponse:
-    search_value = request.GET.get("search", "").strip()
-    posts = (
-        cast(PostManager, Post.objects).get_published()
-        .filter(
-            Q(title__icontains=search_value)
-            | Q(excerpt__icontains=search_value)
-            | Q(content__icontains=search_value)
-        )[:PER_PAGE]
-    )
-    print(posts.query)
+class SearchListView(PostListView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._search_value = ''
 
-    page_title = f'{search_value[:30]} - Search - '
-    return render(
-        request,
-        "blog/pages/index.html",
-        {
-            "page_obj": posts,
-            "search_value": search_value,
-            "page_title": page_title,
-        }
-    )
+    def setup(self, request, *args, **kwargs):
+        self._search_value = request.GET.get('search', '').strip()
+        return super().setup(request, *args, **kwargs)
+
+    def get_queryset(self) -> QuerySet[Any]:
+        search_value = self._search_value
+        return super().get_queryset().filter(
+            Q(title__icontains=search_value) |
+            Q(excerpt__icontains=search_value) |
+            Q(content__icontains=search_value)
+        )[:PER_PAGE]
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        search_value = self._search_value
+        ctx.update({
+            'page_title': f'{search_value[:30]} - Search - ',
+            'search_value': search_value,
+        })
+        return ctx
+
+    def get(self, request, *args, **kwargs):
+        if self._search_value == '':
+            return redirect('blog:index')
+        return super().get(request, *args, **kwargs)
 
 
 def page(request: HttpRequest, slug: str) -> HttpResponse:
