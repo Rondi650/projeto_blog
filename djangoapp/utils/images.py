@@ -9,7 +9,7 @@ from PIL import Image
 def resize_image(image_django: ImageFieldFile | FieldFile, 
                  new_width=800, 
                  optimize=True, 
-                 quality=60):
+                 quality=100):
     
     image_path = Path(settings.MEDIA_ROOT / image_django.name).resolve()
     image_pillow = Image.open(image_path)
