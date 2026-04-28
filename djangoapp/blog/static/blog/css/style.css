@@ -34,6 +34,17 @@ body {
   color: var(--clr-gray-dkst);
   line-height: 1.6;
   font-size: 18px;
+  min-height: 100vh;
+}
+
+.blog-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-main {
+  flex: 1 0 auto;
 }
 
 a {
@@ -497,8 +508,9 @@ img {
 .footer {
   background: var(--clr-gray-dk);
   color: var(--clr-white);
-  padding: 3rem 0;
-  margin-top: 3.5rem;
+  padding: 1.5rem 0;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .footer-inner {
@@ -507,37 +519,20 @@ img {
   padding: 0 2rem;
 }
 
-.footer-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.footer-columns h4 {
-  color: var(--clr-white);
-  margin-bottom: 0.75rem;
-}
-
-.footer-columns p {
+.footer .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   font-size: 0.875rem;
   color: var(--clr-gray-ltr);
-  line-height: 1.7;
-}
-
-.footer-columns ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-columns li {
-  margin-bottom: 0.4rem;
 }
 
 .footer a {
   color: var(--clr-white);
   text-decoration: none;
   transition: color .2s;
-  font-size: 0.875rem;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -552,21 +547,36 @@ img {
   font-size: 1rem;
 }
 
-.footer-bottom {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  margin-top: 2rem;
-}
-
-.footer-bottom p {
-  font-size: 0.875rem;
-  color: var(--clr-gray-ltr);
+.footer-separator {
+  color: var(--clr-gray-base);
 }
 
 /* ── SINGLE POST ── */
 .single-post {
-  padding: 3.5rem 0;
+  padding: 3rem 0;
+}
+
+.single-post-container {
+  padding: 0 2rem;
+}
+
+.single-post-gap {
+  padding: 1.5rem 0;
+}
+
+.pb-base {
+  padding-bottom: 2rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.separator {
+  background: var(--clr-gray-ltst);
+  width: 50%;
+  margin: 0 auto 2rem;
+  height: 1px;
 }
 
 .single-post-cover {
@@ -584,23 +594,24 @@ img {
 
 .single-post-title {
   font-size: 2.4rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   color: var(--clr-black);
 }
 
 .single-post-excerpt {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--clr-gray-lt);
   font-style: italic;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   line-height: 1.8;
   max-width: 90rem;
 }
 
 .post-meta {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   gap: 2rem;
-  margin-bottom: 2rem;
   flex-wrap: wrap;
   font-size: 0.95rem;
 }
@@ -628,38 +639,37 @@ img {
   color: var(--clr-primary-base);
 }
 
-.single-post-content {
+.single-post-body {
   max-width: 90rem;
-  margin: 0 auto;
 }
 
-.single-post-content p {
+.single-post-body p {
   font-size: 1.05rem;
   line-height: 1.95;
   color: var(--clr-gray-dkst);
   margin-bottom: 1.5rem;
 }
 
-.single-post-content h2,
-.single-post-content h3,
-.single-post-content h4 {
+.single-post-body h2,
+.single-post-body h3,
+.single-post-body h4 {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
-.single-post-content ul,
-.single-post-content ol {
+.single-post-body ul,
+.single-post-body ol {
   margin-left: 2rem;
   margin-bottom: 1.5rem;
   font-size: 1rem;
 }
 
-.single-post-content li {
+.single-post-body li {
   margin-bottom: 0.5rem;
   line-height: 1.8;
 }
 
-.single-post-content blockquote {
+.single-post-body blockquote {
   border-left: 4px solid var(--clr-primary-base);
   padding-left: 1.5rem;
   margin: 2rem 0;
@@ -668,7 +678,7 @@ img {
   font-size: 1.05rem;
 }
 
-.single-post-content code {
+.single-post-body code {
   background: var(--clr-gray-ltst);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
@@ -676,7 +686,7 @@ img {
   font-size: 0.9rem;
 }
 
-.single-post-content pre {
+.single-post-body pre {
   background: var(--clr-gray-dkst);
   color: var(--clr-white);
   padding: 1.5rem;
@@ -730,23 +740,9 @@ img {
   font-size: 0.8rem;
 }
 
-.separator {
-  border-top: 1px solid var(--clr-gray-ltst);
-  margin: 2rem 0;
-}
-
-/* ── UTILITIES ── */
-.center {
-  text-align: center;
-}
-
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  .posts-grid { 
-    grid-template-columns: 1fr; 
-  }
-
-  .footer-columns {
+  .posts-grid {
     grid-template-columns: 1fr;
   }
 
@@ -757,6 +753,19 @@ img {
 
   .single-post-title {
     font-size: 1.8rem;
+  }
+
+  .single-post-container {
+    padding: 0 1rem;
+  }
+
+  .footer .center {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-separator {
+    display: none;
   }
 
   .page {

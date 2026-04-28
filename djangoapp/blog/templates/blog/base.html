@@ -5,20 +5,22 @@
   {% block additional_head %}{% endblock additional_head %}
 </head>
 <body>
-  {% if site_setup.show_header %}
-    {% include 'blog/partials/_header.html' %}
-  {% endif %}
+  <div class="blog-wrapper">
+    {% if site_setup.show_header %}
+      {% include 'blog/partials/_header.html' %}
+    {% endif %}
 
-  <div class="page">
-    {% block content %}{% endblock content %}
+    <div class="page page-main">
+      {% block content %}{% endblock content %}
+    </div>
+
+    {% if site_setup.show_pagination %}
+      {% include 'blog/partials/_pagination.html' %}
+    {% endif %}
+
+    {% if site_setup.show_footer %}
+      {% include 'blog/partials/_footer.html' %}
+    {% endif %}
   </div>
-
-  {% if site_setup.show_pagination %}
-    {% include 'blog/partials/_pagination.html' %}
-  {% endif %}
-
-  {% if site_setup.show_footer %}
-    {% include 'blog/partials/_footer.html' %}
-  {% endif %}
 </body>
 </html>

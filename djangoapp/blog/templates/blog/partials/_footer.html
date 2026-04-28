@@ -1,24 +1,15 @@
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-columns">
-      <div>
-        <h4>Sobre</h4>
-        {% if site_setup.show_description %}
-          <p>{{ site_setup.description }}</p>
-        {% else %}
-          <p>Blog pessoal.</p>
-        {% endif %}
-      </div>
-      <div>
-        <h4>Redes</h4>
-        <ul>
-          <li><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/rondinelle-oliveira-7b711519a/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
-          <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/Rondi650"><i class="fa-brands fa-github"></i> GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; {% now "Y" %} {{ site_setup.title }} - Todos os direitos reservados.</p>
+    <div class="center">
+      <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/rondinelle-oliveira-7b711519a/">
+        <i class="fa-brands fa-linkedin"></i> LinkedIn
+      </a>
+      <span class="footer-separator">|</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/Rondi650">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+      <span class="footer-separator">|</span>
+      <span>&copy; {% now "Y" %} {{ site_setup.title }} - Todos os direitos reservados.</span>
     </div>
   </div>
 </footer>
