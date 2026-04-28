@@ -155,7 +155,7 @@ class Post(models.Model):
             print(cover_changed)
 
         if cover_changed:
-            resize_image(self.cover, 900)
+            resize_image(self.cover, 1200)
 
 
 class PostAttachment(AbstractAttachment):
@@ -171,6 +171,6 @@ class PostAttachment(AbstractAttachment):
             file_changed = current_file_name != self.file.name
 
         if file_changed:
-            resize_image(self.file, 900, True, 70)
+            resize_image(self.file, 1200, True, 70)
 
         return super_save
