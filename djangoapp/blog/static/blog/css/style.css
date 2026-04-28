@@ -337,7 +337,7 @@ img {
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .post-card {
@@ -345,14 +345,15 @@ img {
   border-radius: 12px;
   overflow: hidden;
   background: var(--clr-whitest);
-  transition: border-color .2s, box-shadow .2s;
-  display: flex; 
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  display: flex;
   flex-direction: column;
 }
 
 .post-card:hover {
   border-color: var(--clr-primary-lt);
-  box-shadow: 0 4px 20px rgba(14,165,233,.08);
+  box-shadow: 0 8px 30px rgba(14,165,233,.12);
+  transform: translateY(-3px);
 }
 
 .post-img {
@@ -372,12 +373,12 @@ img {
   object-fit: cover;
 }
 
-.post-body { 
-  padding: 1.25rem; 
-  display: flex; 
-  flex-direction: column; 
-  gap: .6rem; 
-  flex: 1; 
+.post-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  flex: 1;
 }
 
 .post-tag {
@@ -390,8 +391,8 @@ img {
 
 .post-title {
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 1.05rem;
-  line-height: 1.35;
+  font-size: 1.1rem;
+  line-height: 1.4;
   color: var(--clr-black);
   font-weight: 600;
   margin-bottom: 0;
@@ -408,10 +409,10 @@ img {
 }
 
 .post-desc {
-  font-size: .82rem; 
-  color: var(--clr-gray-base);
-  font-weight: 300; 
-  line-height: 1.65; 
+  font-size: .82rem;
+  color: var(--clr-gray-lt);
+  font-weight: 300;
+  line-height: 1.65;
   flex: 1;
 }
 
@@ -565,13 +566,14 @@ img {
 
 /* ── SINGLE POST ── */
 .single-post {
-  padding: 3rem 0;
+  padding: 3.5rem 0;
 }
 
 .single-post-cover {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .single-post-cover img {
@@ -588,7 +590,7 @@ img {
 
 .single-post-excerpt {
   font-size: 1.1rem;
-  color: var(--clr-gray-base);
+  color: var(--clr-gray-lt);
   font-style: italic;
   margin-bottom: 2rem;
   line-height: 1.8;
@@ -632,9 +634,10 @@ img {
 }
 
 .single-post-content p {
-  font-size: 1rem;
-  line-height: 1.9;
+  font-size: 1.05rem;
+  line-height: 1.95;
   color: var(--clr-gray-dkst);
+  margin-bottom: 1.5rem;
 }
 
 .single-post-content h2,
