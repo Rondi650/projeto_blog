@@ -1,39 +1,37 @@
-<article class="card">
-  
+<article class="post-card">
   {% if post.cover %}
-  <div class="card-cover-wrapper">
-    <a href="{{ post.get_absolute_url }}" class="card-cover-link">
+  <div class="post-img">
+    <a href="{{ post.get_absolute_url }}">
       <img 
-        class="card-cover"
         loading="lazy"
         src="{{ post.cover.url }}" 
         alt="Cover do post {{ post.title }}"
       >
     </a>
   </div>
+  {% else %}
+  <div class="post-img">
+  </div>
   {% endif %}
+  
+  <div class="post-body">
+    {% if post.category %}
+      <span class="post-tag">{{ post.category.name }}</span>
+    {% endif %}
 
-  <div class="card-text-wrapper">
-    <div class="card-title-wrapper">
-      <h2 class="card-title">
-        <a href="{{ post.get_absolute_url }}" class="card-title-link">
-          {{ post.title }}
-        </a>
-      </h2>
-    </div>
+    <h3 class="post-title">
+      <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+      </a>
+    </h3>
+    
+    <p class="post-desc">
+      {{ post.excerpt }}
+    </p>
 
-    <div class="card-content-wrapper">
-      <p class="card-content">
-        {{ post.excerpt }}
-      </p>
-
-      <div class="card-actions">
-        <a class="card-action-link" href="{{ post.get_absolute_url }}">
-          <span>Read</span>
-          <i class="fa-solid fa-circle-arrow-right"></i>
-        </a>
-      </div>
+    <div class="post-foot">
+      <span>{{ post.created_at|date:'d M Y' }}</span>
+      <a class="card-read-link" href="{{ post.get_absolute_url }}">leia mais</a>
     </div>
   </div>
-
 </article>

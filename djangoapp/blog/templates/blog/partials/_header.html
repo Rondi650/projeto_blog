@@ -1,53 +1,58 @@
-<header class="header section-wrapper">
-  <div class="section-content-wide">
-    <div class="section-gap">
+<header class="header-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">{{ site_setup.title }}</a>
 
-      <h1 class="blog-title center pb-base">
-        <a class="blog-link" href="/"> {{ site_setup.title }}</a>
-      </h1>
-      
-      {% if site_setup.show_description %}
-        <p class="blog-description pb-base center">{{ site_setup.description}}</p>
-      {% endif %}
-
-      {% if site_setup.show_search %}
-        <div class="search pb-base center">
-          <form class="search-form" action="{% url 'blog:search' %}" method="get">
-            <div class="search-content">
-              <label class="sr-only" id="search-label" for="search-input">Search</label>
-              <input
-                class="search-input"
-                type="search"
-                name="search"
-                id="search-input"
-                placeholder="Search"
-                value="{{ search_value }}"
-                required
-              >
-              <button class="search-btn" type="submit" aria-labelledby="search-label">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      {% endif %}
-
+    <ul class="nav-links">
       {% if site_setup.show_menu %}
-        <nav class="menu">
-          <ul class="menu-items">
-            {% for link in site_setup.menu_links.all %}
-            <li class="menu-item">
-              {% if link.new_tab %}
-                <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">{{ link.text }}</a>
-              {% else %}
-                <a class="menu-link" href="{{ link.url_or_path }}">{{ link.text }}</a>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-        </nav>
+        {% for link in site_setup.menu_links.all %}
+          <li class="menu-item">
+            {% if link.new_tab %}
+              <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">{{ link.text }}</a>
+            {% else %}
+              <a class="menu-link" href="{{ link.url_or_path }}">{{ link.text }}</a>
+            {% endif %}
+          </li>
+        {% endfor %}
       {% endif %}
-      
-    </div>
+    </ul>
+
+    {% if site_setup.show_search %}
+      <form class="nav-search" action="{% url 'blog:search' %}" method="get">
+        <label class="sr-only" id="search-label" for="search-input">Search</label>
+        <input
+          class="search-input"
+          type="search"
+          name="search"
+          id="search-input"
+          placeholder="Buscar..."
+          value="{{ search_value }}"
+          required
+        >
+        <button class="search-btn" type="submit" aria-labelledby="search-label">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    {% endif %}
   </div>
 </header>
+
+{% if site_setup.show_description %}
+  <div class="page">
+    <section class="hero">
+      <div class="hero-tag">{{ site_setup.title }}</div>
+      <h1>{{ site_setup.description }}</h1>
+      <p>Python, Django, Linux e tudo que fica no meio do caminho entre uma ideia e o c&oacute;digo funcionando.</p>
+      {% if site_setup.show_menu %}
+        <div class="hero-actions">
+          {% for link in site_setup.menu_links.all %}
+            {% if link.new_tab %}
+              <a target="_blank" class="btn {% if forloop.first %}btn-primary{% else %}btn-ghost{% endif %}" href="{{ link.url_or_path }}">{{ link.text }}</a>
+            {% else %}
+              <a class="btn {% if forloop.first %}btn-primary{% else %}btn-ghost{% endif %}" href="{{ link.url_or_path }}">{{ link.text }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endif %}

@@ -1,28 +1,21 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <main class="main-content section-wrapper">
-    <div class="section-content-wide">
-      <div class="section-gap">
-
-        {% if posts %}
-        <div class="card-grid">
-          {% for post in posts %}
-            {% include 'blog/partials/_post-card.html' with i=forloop.counter0 %}
-          {% endfor %}
-        </div>
-        {% else %}
-
-        <div class="not-found center">
-          <h1>Nada Encontrado</h1>
-          <p>Nao encontrei nada nesse link, clique em outro link do nosso blog ou va para a 
-            <a href={% url "blog:index" %}>Home</a>
-          </p>
-        </div>
-
-        {% endif %}
-
+  {% if posts %}
+    <section class="posts">
+      <p class="section-label">Recentes</p>
+      <div class="posts-grid">
+        {% for post in posts %}
+          {% include 'blog/partials/_post-card.html' with i=forloop.counter0 %}
+        {% endfor %}
       </div>
+    </section>
+  {% else %}
+    <div class="not-found center">
+      <h1>Nada Encontrado</h1>
+      <p>N&atilde;o encontrei nada nesse link, clique em outro link do nosso blog ou v&aacute; para a
+        <a href="{% url 'blog:index' %}">Home</a>
+      </p>
     </div>
-  </main>
+  {% endif %}
 {% endblock content %}
