@@ -251,7 +251,8 @@ img {
   font-weight: 600;
 }
 
-.hero h1 em {
+.hero h1 em,
+.hero p em {
   font-style: italic;
   color: var(--clr-primary-dk);
 }
