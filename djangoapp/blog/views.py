@@ -2,7 +2,6 @@ from typing import Any, Dict
 
 from blog.models import Page, Post
 from django.contrib.auth.models import User
-from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
