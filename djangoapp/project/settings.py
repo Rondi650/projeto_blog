@@ -34,6 +34,17 @@ ALLOWED_HOSTS = [
     h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://blog.samaramutielli.site',
+    'http://blog.samaramutielli.site',
+]
+
+# Proxy SSL (Nginx/Cloudflare)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Application definition
 
 INSTALLED_APPS = [

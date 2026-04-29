@@ -9,3 +9,4 @@ psycopg2-binary==2.9.10 # para postgres
 pillow==10.4.0 # para imagem
 django-summernote==0.8.20.0
 django-axes==8.3.1
+gunicorn==25.3.0

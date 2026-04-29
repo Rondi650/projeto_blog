@@ -5,13 +5,14 @@ services:
     build:
       context: .
     ports:
-      - 8000:8000
+      - "127.0.0.1:8000:8000"
     volumes:
-      - ./djangoapp:/djangoapp
-      - ./data/web/static:/data/web/static/
-      - ./data/web/media:/data/web/media/
+      - ./data/web/static:/data/web/static
+      - ./data/web/media:/data/web/media
     env_file:
       - ./.env
+    environment:
+      - POSTGRES_HOST=psql
     depends_on:
       - psql
 
