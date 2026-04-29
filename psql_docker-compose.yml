@@ -20,6 +20,7 @@ services:
 
   psql:
     container_name: psql
+    restart: always
     image: postgres:16-alpine
     volumes:
       - ./data/postgres/data:/var/lib/postgresql/data/
