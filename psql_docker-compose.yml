@@ -20,8 +20,6 @@ services:
   psql:
     container_name: psql
     image: postgres:13-alpine
-    ports:
-      - 5432:5432
     volumes:
       - ./data/postgres/data:/var/lib/postgresql/data/
     env_file:
