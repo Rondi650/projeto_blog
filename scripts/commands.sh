@@ -3,12 +3,12 @@
 # O shell irá encerrar a execução do script quando um comando falhar
 set -e
 
-while ! nc -z $MYSQL_HOST $MYSQL_PORT; do
-  echo "🟡 Waiting for MySQL Database Startup ($MYSQL_HOST $MYSQL_PORT) ..."
+while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do
+  echo "🟡 Waiting for MySQL Database Startup ($POSTGRES_HOST $POSTGRES_PORT) ..."
   sleep 2
 done
 
-echo "✅ MySQL Database Started Successfully ($MYSQL_HOST:$MYSQL_PORT)"
+echo "✅ MySQL Database Started Successfully ($POSTGRES_HOST:$POSTGRES_PORT)"
 
 python3 manage.py collectstatic --noinput
 python3 manage.py makemigrations --noinput
