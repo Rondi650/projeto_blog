@@ -20,6 +20,8 @@ def site_setup(request: HttpRequest):
     if setup is None:
         return {}  # retorna contexto vazio, sem quebrar
 
-    return {
-        'site_setup': setup,
-    }
+    context = {}
+    for chave, valor in setup.__dict__.items():
+        context[chave] = valor
+
+    return context
