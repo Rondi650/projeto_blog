@@ -16,6 +16,9 @@ def site_setup(request: HttpRequest):
         print(chave, ": ", valor)
     print("-"*50)
     # Fim do debug
+    
+    if setup is None:
+        return {}  # retorna contexto vazio, sem quebrar
 
     return {
         'site_setup': setup,
