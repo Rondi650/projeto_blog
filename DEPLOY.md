@@ -1,5 +1,8 @@
 # Blog - Deploy com Nginx + Gunicorn + PostgreSQL
 
+> **Deploy realizado em:** 29/04/2026  
+> **Commit de referência:** `b6d64ad57fcb7f25010cae7c1518a8877d94dadd`
+
 ## Visão Geral da Arquitetura
 
 ```
