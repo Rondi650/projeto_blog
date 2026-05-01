@@ -891,3 +891,26 @@ html, body {
     font-size: 1.5rem;
   }
 }
+
+/* ─── POST: SCROLL HORIZONTAL PARA CÓDIGO E TABELAS ─── */
+.single-post-body .CodeMirror {
+  overflow-x: auto !important;
+  max-width: 100%;
+}
+
+.single-post-body .CodeMirror-scroll {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+.single-post-body .table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 1.5rem 0;
+}
+
+.single-post-body .table-wrapper table {
+  width: auto;
+  min-width: 100%;
+  margin: 0;
+}
