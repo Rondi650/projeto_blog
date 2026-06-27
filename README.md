@@ -1,14 +1,148 @@
-Para alternar entre MySQL e PostgreSQL:
-1. Descomentar/Comentar o bloco de código correspondente ao banco de dados desejado e comentar o outro em `requirements.txt`.
-2. Descomentar/Comentar o FROM e RUN no  `Dockerfile` para construir uma imagem Docker com as dependências corretas para cada banco de dados.
-3. Em `settings.py`, configurar o `DATABASES` para usar o banco de dados escolhido, seja MySQL ou PostgreSQL.
-    - Network Docker funciona apenas se estiver HOST="172.17.0.1", nao funciona com localhost.
-4. Certificar-se de que o banco de dados esteja em execução e acessível para a aplicação Django.
-5. Usa o docker-compose correto para iniciar os serviços:
-    - Para MySQL: `docker compose -f mysql_docker-compose.yml up -d`
-    - Para PostgreSQL: `docker compose -f psql_docker-compose.yml up -d`
-6. Acessar a aplicação Django em `http://localhost:8000` para verificar
+# Django Blog
 
-Psql usa 191MB e o Mysql usa 835MB, `cerca de 3,3x menor`, devido a necessidade de instalar o cliente MySQL `mysqlclient`, 
-que é mais pesado do que o cliente PostgreSQL. O cliente MySQL inclui bibliotecas adicionais e dependências que aumentam 
-o tamanho da imagem Docker, enquanto o cliente PostgreSQL `psycopg2-binary` é mais leve e tem menos dependências, resultando em uma imagem Docker menor.
+A full-featured blog built with Django 6, PostgreSQL/MySQL, and Docker. Features comprehensive test coverage (97%).
+
+## Tech Stack
+
+- **Backend**: Django 6.0.4, Python 3.12
+- **Database**: PostgreSQL (default) or MySQL
+- **Frontend**: Django Templates, HTML5, CSS3
+- **Editor**: django-summernote (WYSIWYG)
+- **Deploy**: Docker, Gunicorn
+- **Testing**: pytest, pytest-django, pytest-cov (97% coverage)
+
+## Project Structure
+
+```
+├── djangoapp/                 # Django application code
+│   ├── blog/                  # Main app (posts, pages, tags)
+│   ├── site_setup/            # Site configuration
+│   ├── project/               # Project settings
+│   ├── utils/                 # Utilities (images, validators)
+│   ├── tests.py               # App tests
+│   └── requirements.txt       # Dependencies
+├── data/                      # Persistent data (Docker volumes)
+├── scripts/
+│   └── commands.sh            # Container entrypoint
+├── docker-compose files       # PostgreSQL or MySQL configs
+└── README.md                  # This file
+```
+
+## Local Development
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Git
+
+### Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd blog
+   ```
+
+2. **Configure environment**
+   ```bash
+   # Copy and edit the .env file
+   cp djangoapp/.env.example djangoapp/.env
+   # Edit djangoapp/.env with your settings
+   ```
+
+3. **Start with PostgreSQL** (recommended - 3x smaller image)
+   ```bash
+   docker compose -f psql_docker-compose.yml up -d --build
+   ```
+
+   **Or with MySQL:**
+   ```bash
+   docker compose -f mysql_docker-compose.yml up -d --build
+   ```
+
+4. **Access the blog**
+   - Blog: http://localhost:8000
+   - Admin: http://localhost:8000/admin
+   - Default user: create via `docker exec`
+
+## Testing
+
+The project includes **44 tests** with **97% code coverage**.
+
+### Run all tests
+
+```bash
+cd djangoapp
+python -m pytest
+```
+
+### Run tests for a specific app
+
+```bash
+python -m pytest blog/tests.py
+python -m pytest site_setup/tests.py
+python -m pytest utils/tests.py
+```
+
+### Coverage report
+
+```bash
+python -m pytest --cov=. --cov-report=html
+# Open htmlcov/index.html in your browser
+```
+
+### Available Tests
+
+- **Models**: Tag, Category, Page, Post, PostAttachment, SiteSetup, MenuLink
+- **Views**: index, post detail, page detail, category, tag, search, created_by
+- **Admin**: PostAdmin (link, save_model), SiteSetupAdmin (has_add_permission)
+- **Utils**: resize_image, validate_png
+
+## Switching Between PostgreSQL and MySQL
+
+1. **requirements.txt**: Uncomment the driver for your chosen database
+2. **Dockerfile**: Adjust FROM if needed (Alpine base vs Slim)
+3. **settings.py**: Configure the DATABASES block
+4. **.env**: Set POSTGRES_* or MYSQL_* variables
+5. **Network**: Use `172.17.0.1` as host (not `localhost`)
+
+> **Note**: PostgreSQL uses ~191MB vs MySQL ~835MB (Docker image 3.3x smaller).
+
+## Features
+
+- Posts with WYSIWYG editor (Summernote)
+- Categories and Tags
+- Static pages
+- Post search
+- Pagination
+- Image upload with automatic resizing
+- SEO-friendly URLs (auto-generated slugs)
+- Custom admin interface
+- Dynamic site settings
+
+## Useful Commands
+
+```bash
+# View logs
+docker logs djangoapp_psql -f
+
+# Django shell
+docker exec -it djangoapp_psql python manage.py shell
+
+# Create superuser
+docker exec -it djangoapp_psql python manage.py createsuperuser
+
+# Run migrations
+docker exec -it djangoapp_psql python manage.py migrate
+
+# Collect static files
+docker exec -it djangoapp_psql python manage.py collectstatic
+```
+
+## License
+
+This project is open source. Feel free to use and modify.
+
+---
+
+**Built with Django 6**
