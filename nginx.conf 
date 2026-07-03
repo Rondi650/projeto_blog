@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    location /static/ {
+        alias /data/web/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location /media/ {
+        alias /data/web/media/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        return 404;
+    }
+}
