@@ -4,8 +4,9 @@ services:
     restart: unless-stopped
     build:
       context: .
-    ports:
-      - "127.0.0.1:8000:8000"
+    networks:
+      - proxy
+      - default
     volumes:
       - ./data/web/static:/data/web/static
       - ./data/web/media:/data/web/media
@@ -15,8 +16,12 @@ services:
       - POSTGRES_HOST=psql
     depends_on:
       - psql
-
-# MARCADO COM # PARA PRODUCAO
+    labels:
+      - "traefik.enable=true"                                                 
+      - "traefik.http.routers.meuapp.rule=Host(`blog.samaramutielli.site`)"             
+      - "traefik.http.routers.meuapp.entrypoints=websecure"                    
+      - "traefik.http.routers.meuapp.tls.certresolver=leresolver"       
+      - "traefik.http.services.blog.loadbalancer.server.port=8000"
 
   psql:
     container_name: psql
@@ -27,7 +32,6 @@ services:
     env_file:
       - ./.env
 
-volumes:
-  static_data:
-  media_data:
-  postgres_data:
+networks:
+  proxy:
+    external: true                            
