@@ -162,7 +162,6 @@ MEDIA_ROOT = DATA_DIR / 'media'
 SUMMERNOTE_CONFIG = {
     'summernote': {
         # Toolbar customization
-        # https://summernote.org/deep-dive/#custom-toolbar-popover
         'toolbar': [
             ['style', ['style', ]],
             ['font', ['bold', 'italic', 'clear']],
@@ -173,14 +172,31 @@ SUMMERNOTE_CONFIG = {
             ['view', ['fullscreen', 'codeview', 'undo', 'redo']],
         ],
         'codemirror': {
+            # 'htmlmixed' consegue renderizar HTML, XML, JS e CSS juntos.
+            # O CodeMirror estende o suporte para as outras se os scripts estiverem carregados.
             'mode': 'htmlmixed',
-            'lineNumbers': 'true',
-            'lineWrapping': 'true',
+            'lineNumbers': True,
+            'lineWrapping': True,
             'theme': 'dracula',
         },
     },
     'css': (
-        '//cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css',
+    ),
+    'js': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js',
+        # Carrega o esqueleto híbrido (HTML/XML/JS/CSS)
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js',
+
+        # --- Adicione aqui as linguagens extras que você quer que o editor reconheça ---
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/yaml/yaml.min.js',
+        # (C, C++, Java, C#)
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js',
     ),
     'attachment_filesize_limit': 30 * 1024 * 1024,
     'attachment_model': 'blog.PostAttachment',
