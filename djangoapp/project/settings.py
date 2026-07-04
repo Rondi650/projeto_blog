@@ -35,8 +35,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://blog.samaramutielli.site',
-    'http://blog.samaramutielli.site',
+    'https://blog.docker.localhost',
+    'http://blog.docker.localhost',
 ]
 
 # Proxy SSL (Nginx/Cloudflare)

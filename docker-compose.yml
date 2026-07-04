@@ -18,12 +18,12 @@ services:
       - psql
     labels:
       - "traefik.enable=true"                                                 
-      - "traefik.http.routers.meuapp.rule=Host(`blog.samaramutielli.site`)"             
+      - "traefik.http.routers.meuapp.rule=Host(`blog.docker.localhost`)"             
       - "traefik.http.routers.meuapp.entrypoints=websecure"                    
-      - "traefik.http.routers.meuapp.tls.certresolver=letsencrypt"       
+      - "traefik.http.routers.prometheus.tls=true"   
       - "traefik.http.services.blog.loadbalancer.server.port=8000"
       - "traefik.http.routers.meuapp.priority=10"
-
+  
   psql:
     container_name: psql
     restart: always
@@ -45,9 +45,9 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.static.rule=Host(`blog.samaramutielli.site`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.static.rule=Host(`blog.docker.localhost`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.static.entrypoints=websecure"
-      - "traefik.http.routers.static.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prometheus.tls=true"
       - "traefik.http.services.static.loadbalancer.server.port=80"
       - "traefik.http.routers.static.priority=20"
 
