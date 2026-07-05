@@ -144,3 +144,7 @@ GitHub.sublime-settings
 .history
 .AGENTS.md
 .CLAUDE.md
+
+docker-compose.yml
+nginx.conf
+Dockerfile
