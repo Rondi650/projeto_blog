@@ -35,8 +35,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://blog.docker.localhost',
-    'http://blog.docker.localhost',
+    h.strip() for h in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if h.strip()
 ]
 
 # Proxy SSL (Nginx/Cloudflare)
