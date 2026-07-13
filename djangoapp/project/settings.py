@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'project.middleware.StaticFilesCacheMiddleware',  # Cache busting - headers para Cloudflare
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,6 +93,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
                 'site_setup.context_processor.site_setup',
             ],
         },
@@ -156,6 +158,9 @@ STATIC_ROOT = DATA_DIR / 'static'
 MEDIA_URL = '/media/'
 # /data/web/media
 MEDIA_ROOT = DATA_DIR / 'media'
+
+# Cache busting - adiciona hash aos arquivos estáticos para invalidar cache do Cloudflare
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 
 SUMMERNOTE_CONFIG = {
