@@ -40,8 +40,8 @@ Navegador → POST /admin/blog/post/1/change/ (form com imagem)
                          │ ②
                          ▼
               ┌─────────────────────┐    ③ consulta     ┌──────────┐
-              │  DJANGO (Gunicorn)  │──────────────────▶│  PSQL    │
-              │                     │◀──────────────────│  (banco) │
+              │  DJANGO (Gunicorn)  │──────────────────▶ │  PSQL    │
+              │                     │◀────────────────── │  (banco) │
               │  post.cover =       │     devolve path   └──────────┘
               │  "posts/2026/07/    │
               │   foto.jpg"         │
@@ -138,14 +138,14 @@ Navegador → POST /admin/blog/post/1/change/ (form com imagem)
 
 ## Resumo dos 9 passos
 
-| Passo | De | Para | O que acontece |
-|-------|----|------|----------------|
-| ① | Navegador | Traefik | GET /post/meu-artigo/ |
-| ② | Traefik | Django | Roteia pro Gunicorn (padrão) |
-| ③ | Django | PSQL | Consulta o path da imagem no banco |
-| ④ | Django | — | Renderiza template com `<img src="/media/...">` |
-| ⑤ | Traefik | Navegador | Devolve o HTML |
-| ⑥ | Navegador | Traefik | GET /media/posts/2026/07/foto.jpg |
-| ⑦ | Traefik | nginx | Roteia via PathPrefix /media/ |
-| ⑧ | nginx | Traefik | Lê do disco, devolve bytes |
-| ⑨ | Traefik | Navegador | Imagem chega pro usuário |
+| Passo | De        | Para      | O que acontece                                   |
+| ----- | --------- | --------- | ------------------------------------------------ |
+| ①    | Navegador | Traefik   | GET /post/meu-artigo/                            |
+| ②    | Traefik   | Django    | Roteia pro Gunicorn (padrão)                    |
+| ③    | Django    | PSQL      | Consulta o path da imagem no banco               |
+| ④    | Django    | —        | Renderiza template com`<img src="/media/...">` |
+| ⑤    | Traefik   | Navegador | Devolve o HTML                                   |
+| ⑥    | Navegador | Traefik   | GET /media/posts/2026/07/foto.jpg                |
+| ⑦    | Traefik   | nginx     | Roteia via PathPrefix /media/                    |
+| ⑧    | nginx     | Traefik   | Lê do disco, devolve bytes                      |
+| ⑨    | Traefik   | Navegador | Imagem chega pro usuário                        |
